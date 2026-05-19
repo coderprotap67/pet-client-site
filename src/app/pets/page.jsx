@@ -36,7 +36,6 @@ export default function AllPetsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-4 gap-8">
-      {/* SIDEBAR FILTER INTERFACE */}
       <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl h-fit border border-slate-200 dark:border-slate-700">
         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Filter Control Panel</h3>
         
@@ -68,8 +67,6 @@ export default function AllPetsPage() {
           </div>
         </div>
       </div>
-
-      {/* RENDER GRID INTERFACE */}
       <div className="lg:col-span-3">
         {pets.length === 0 ? (
           <div className="text-center py-20 text-slate-500 dark:text-slate-400">

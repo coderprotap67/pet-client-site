@@ -64,13 +64,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ডান পাশ: কন্টাক্ট ও কপিরাইট */}
         <div className="space-y-2 md:text-right text-sm">
           <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
             Contact Channels
           </h4>
-          <p>support@pawshome.com</p>
-          <p>+880 1234 567890</p>
+          <p>chakmaprotap855@gmail.com</p>
+          <p>+880 01533098947</p>
           <p className="text-xs text-slate-400 dark:text-slate-500 pt-2">
             PawsHome Adoption Platform © 2026
           </p>

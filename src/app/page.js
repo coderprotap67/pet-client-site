@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PetCard from '../components/PetCard';
+import { useAuth } from '../context/AuthContext'; // 🎯 আপনার AuthContext ইমপোর্ট করা হলো
 
 export default function HomePage() {
   const [featuredPets, setFeaturedPets] = useState([]);
+  const { user } = useAuth(); // 🔒 বর্তমান ইউজার লগইন আছে কিনা জানার জন্য
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/pets').then((res) => {
@@ -44,20 +46,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 2: DYNAMIC GRID */}
+      {/* SECTION 2: DYNAMIC GRID (🔒 এখানে কন্ডিশন যুক্ত করা হলো) */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Featured Companions</h2>
         <p className="text-slate-500 dark:text-slate-400 mb-10">Meet some lovable friends searching for a warm family.</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredPets.map((pet) => (
-            <PetCard key={pet._id} pet={pet} />
-          ))}
-        </div>
+        
+        {user ? (
+          // 🔓 ইউজার লগইন থাকলে আসল কার্ডগুলো দেখাবে
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredPets.map((pet) => (
+              <PetCard key={pet._id} pet={pet} />
+            ))}
+          </div>
+        ) : (
+<div className="flex flex-col items-center justify-center p-12 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 text-center">
+  <span className="text-5xl mb-4">🔒</span>
+  <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+    Login Required to View Featured Companions
+  </h3>
+  <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-sm">
+    To protect our community and view full pet profiles, photos, and adoption details, please sign in or create an account.
+  </p>
+  <Link href="/login">
+    <motion.button 
+      whileHover={{ scale: 1.05 }} 
+      whileTap={{ scale: 0.95 }} 
+      className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md"
+    >
+      Login / Sign Up 🐾
+    </motion.button>
+  </Link>
+</div>
+        )}
       </section>
 
       <hr className="border-slate-200 dark:border-slate-800" />
-
-      {/* SECTION 3: WHY ADOPT PETS */}
       <section className="max-w-7xl mx-auto px-4 py-20 text-center">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-12">Why Adopt From Us?</h2>
         <div className="grid md:grid-cols-3 gap-8">
@@ -78,8 +101,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* SECTION 4: SUCCESS STORIES */}
       <section className="bg-slate-50 dark:bg-slate-950 py-20">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">Happy Tails (Success Stories)</h2>
@@ -101,8 +122,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* SECTION 5: PET CARE TIPS */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center">Essential Educational Snippets</h2>
         <div className="grid md:grid-cols-3 gap-8">
@@ -129,8 +148,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* SECTION 6: ADOPTION PROCESS GUIDE */}
       <section className="bg-amber-500 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-12">How the Adoption Process Works</h2>
@@ -158,8 +175,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* SECTION 7: UPCOMING PET EVENTS */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-10 text-center">Upcoming Community Initiatives</h2>
         <div className="bg-slate-100 dark:bg-slate-800 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-center">

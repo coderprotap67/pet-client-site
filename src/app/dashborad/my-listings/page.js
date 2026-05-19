@@ -36,7 +36,7 @@ export default function MyListingsDashboard() {
       const res = await axios.patch(`http://localhost:5000/api/requests/${requestId}/process`, { action });
       if (res.data.success) {
         setModalOpen(false);
-        fetchDashboardMetadata(); // Re-fetch metrics data to instantly reflect single-approval modifications
+        fetchDashboardMetadata(); 
       }
     } catch (err) {
       alert(err.response?.data?.message || 'Processing error');
@@ -45,14 +45,12 @@ export default function MyListingsDashboard() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">
-      {/* METRIC SUMMARIES */}
       <div className="grid grid-cols-3 gap-6">
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700"><p className="text-sm text-slate-400">Total Listings</p><p className="text-3xl font-extrabold text-slate-900 dark:text-white">{stats.total}</p></div>
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700"><p className="text-sm text-green-500">Available Status</p><p className="text-3xl font-extrabold text-green-600">{stats.available}</p></div>
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700"><p className="text-sm text-amber-500">Adopted Count</p><p className="text-3xl font-extrabold text-amber-600">{stats.adopted}</p></div>
       </div>
 
-      {/* ADMIN DATA INTERFACE TABLE */}
       <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm overflow-hidden border border-slate-100 dark:border-slate-700">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -79,8 +77,6 @@ export default function MyListingsDashboard() {
           </tbody>
         </table>
       </div>
-
-      {/* SINGLE-APPROVAL PROCESS MODAL INTERFACE */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-xs">
           <div className="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full p-6 shadow-xl relative m-4 max-h-[85vh] overflow-y-auto">

@@ -1,20 +1,25 @@
 'use client';
+import { useTheme } from './MyThemeProvider';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiSun, HiMoon } from 'react-icons/hi'; // সান এবং মুন আইকন
-import { MdPets } from 'react-icons/md'; // মডার্ন পেট পাও আইকন
+import { HiSun, HiMoon } from 'react-icons/hi';
+import { MdPets } from 'react-icons/md'; 
 import { createAuthClient } from "better-auth/react";
 
-// Better-Auth ক্লায়েন্ট মেথড
 const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL
 });
 
 export default function Navbar() {
-  const { user, theme, toggleTheme, setUser } = useAuth();
+  const { user, setUser } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -41,6 +46,7 @@ export default function Navbar() {
             PawsHome
           </span>
         </Link>
+        
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors font-medium text-sm">Home</Link>
           <Link href="/pets" className="text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors font-medium text-sm">All Pets</Link>
@@ -51,15 +57,17 @@ export default function Navbar() {
             </>
           )}
         </div>
+        
         <div className="flex items-center space-x-4">
-          {/* toggle icon */}
-          <button 
-            onClick={toggleTheme} 
-            className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-400 transition-all text-xl"
-            title={theme === 'light' ? "Switch to Dark" : "Switch to Light"}
-          >
-            {theme === 'light' ? <HiMoon /> : <HiSun />}
-          </button>
+                    {mounted && (
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-400 transition-all text-xl"
+              title={theme === 'dark' ? "Switch to Day Mode" : "Switch to Dark Mode"}
+            >
+              {theme === 'dark' ? <HiSun /> : <HiMoon />}
+            </button>
+          )}
 
           {user ? (
             <div className="relative">

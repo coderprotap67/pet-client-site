@@ -1,7 +1,8 @@
- import './globals.css';
+import './globals.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ThemeProvider from '../components/ThemeProvider';
+import MyThemeProvider from '../components/MyThemeProvider'; 
+import { AuthProvider } from '../context/AuthContext'; 
 
 export const metadata = {
   title: 'PawsHome - Pet Adoption System',
@@ -10,13 +11,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
-        <ThemeProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </ThemeProvider>
+                <MyThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <AuthProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </AuthProvider>
+        </MyThemeProvider>
+
       </body>
     </html>
   );
