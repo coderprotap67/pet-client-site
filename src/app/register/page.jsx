@@ -38,4 +38,4 @@ export default function RegisterPage() {
       <p className="text-sm text-center text-slate-500 dark:text-slate-400 mt-6">Existing user? <Link href="/login" className="text-amber-500 font-semibold underline">Login instead</Link></p>
     </div>
   );
-}
+} 
