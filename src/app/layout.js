@@ -1,4 +1,4 @@
- import './globals.css'; // নিশ্চিত করুন যে আপনার tailwind ডিরেক্টিভস এখানে আছে
+ import './globals.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ThemeProvider from '../components/ThemeProvider';
