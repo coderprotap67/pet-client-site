@@ -12,7 +12,7 @@ export default function PetDetailsPage() {
   const [messageFeedback, setMessageFeedback] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/pets/${id}`).then((res) => {
+    axios.get(`http://localhost:5000/pets/${id}`).then((res) => {
       if (res.data.success) setPet(res.data.data);
     });
   }, [id]);

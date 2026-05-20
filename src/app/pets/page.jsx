@@ -15,7 +15,7 @@ export default function AllPetsPage() {
     const fetchFilteredData = async () => {
       try {
         const speciesQuery = selectedSpecies.length > 0 ? selectedSpecies.join(',') : '';
-        const url = `http://localhost:5000/api/pets?search=${search}&species=${speciesQuery}`;
+        const url = `http://localhost:5000/pets?search=${search}&species=${speciesQuery}`;
         const res = await axios.get(url);
         if (res.data.success) setPets(res.data.data);
       } catch (err) {
