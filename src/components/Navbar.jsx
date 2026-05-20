@@ -17,6 +17,7 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -59,7 +60,7 @@ export default function Navbar() {
         </div>
         
         <div className="flex items-center space-x-4">
-                    {mounted && (
+          {mounted && (
             <button 
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
               className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-400 transition-all text-xl"
@@ -103,8 +104,8 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
           ) : (
-            <Link href="/login" className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-full transition-all duration-200 font-bold text-sm shadow-xs active:scale-95">
-              Login
+            <Link href="/register" className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-full transition-all duration-200 font-bold text-sm shadow-xs active:scale-95">
+              Sign Up
             </Link>
           )}
         </div>

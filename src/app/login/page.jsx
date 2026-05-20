@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { createAuthClient } from "better-auth/react";
 import Link from 'next/link';
+import { FcGoogle } from 'react-icons/fc';
 
 const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL
@@ -49,9 +50,8 @@ export default function LoginPage() {
         <hr className="border-slate-200 dark:border-slate-700" />
         <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 px-3 text-xs text-slate-400 font-bold uppercase tracking-wider">Or continue with</span>
       </div>
-
       <button onClick={handleGoogleLogin} className="w-full flex items-center justify-center gap-3 border dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 py-3 rounded-xl font-bold transition">
-        <img src="https://docs.better-auth.com/icons/google.svg" alt="Google" className="w-5 h-5" />
+        <FcGoogle className="text-2xl" /> 
         Sign in with Google
       </button>
 
