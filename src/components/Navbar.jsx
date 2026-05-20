@@ -26,7 +26,7 @@ export default function Navbar() {
     try {
       await authClient.signOut(); 
       setUser(null);
-      localStorage.removeItem("token"); // টোকেন মুছে ফেলা
+      localStorage.removeItem("token"); 
       window.location.href = '/';
     } catch (err) {
       console.error("Sign out process error:", err);
