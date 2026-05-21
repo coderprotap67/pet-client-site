@@ -4,7 +4,8 @@ import axios from 'axios';
 
 const AuthContext = createContext(null);
 axios.defaults.withCredentials = true; 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
+const API_URL = 'http://localhost:5000';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -12,34 +13,37 @@ export function AuthProvider({ children }) {
   const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    // Check local auth state
     const fetchCurrentUser = async () => {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await axios.get(`${API_URL}/auth/me`);
-        if (res.data.success) setUser(res.data.user);
+        const res = await axios.get(`${API_URL}/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (res.data.success) {
+          setUser(res.data.data);
+        }
       } catch (err) {
+        console.error("Auth check failed:", err);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
-    fetchCurrentUser();
 
-    // System theme setup
-    const storedTheme = localStorage.getItem('theme') || 'light';
+    fetchCurrentUser();    const storedTheme = localStorage.getItem('theme') || 'light';
     setTheme(storedTheme);
     document.documentElement.classList.toggle('dark', storedTheme === 'dark');
   }, []);
 
-  const toggleTheme = () => {
-    const targetTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(targetTheme);
-    localStorage.setItem('theme', targetTheme);
-    document.documentElement.classList.toggle('dark', targetTheme === 'dark');
-  };
-
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, theme, toggleTheme }}>
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

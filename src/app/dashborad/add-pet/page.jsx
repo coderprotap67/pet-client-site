@@ -1,15 +1,13 @@
 "use client";
 import { useState } from "react";
-import axiosSecure from "@/lib/axiosSecure"; // আগে তৈরি করা axiosSecure ফাইলটি ইম্পোর্ট করুন
+import axiosSecure from "@/lib/axiosSecure"; 
 import toast from "react-hot-toast";
 
 const AddPet = () => {
   const handleAddPet = async (e) => {
     e.preventDefault();
     const form = e.target;
-    
-    // ফর্ম থেকে ডাটা নেওয়া
-    const newPet = {
+        const newPet = {
       name: form.name.value,
       species: form.species.value,
       breed: form.breed.value,
@@ -17,7 +15,6 @@ const AddPet = () => {
       location: form.location.value,
       description: form.description.value,
       image: form.image.value,
-      // অন্য ফিল্ডগুলো এখানে যোগ করুন...
     };
 
     try {

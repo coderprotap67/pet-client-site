@@ -4,21 +4,18 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PetCard from '../components/PetCard';
-import { useAuth } from '../context/AuthContext'; // 🎯 আপনার AuthContext ইমপোর্ট করা হলো
+import { useAuth } from '../context/AuthContext'; 
 
 export default function HomePage() {
   const [featuredPets, setFeaturedPets] = useState([]);
-  const { user } = useAuth(); // 🔒 বর্তমান ইউজার লগইন আছে কিনা জানার জন্য
-
+  const { user } = useAuth(); 
   useEffect(() => {
     axios.get('http://localhost:5000/api/pets').then((res) => {
       if (res.data.success) setFeaturedPets(res.data.data.slice(0, 6));
     });
   }, []);
-
   return (
     <div className="bg-white dark:bg-slate-900 transition-colors duration-300">
-      {/* SECTION 1: HERO CONTAINER */}
       <section className="relative overflow-hidden bg-amber-50/50 dark:bg-slate-950 py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div 
@@ -45,14 +42,11 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* SECTION 2: DYNAMIC GRID (🔒 এখানে কন্ডিশন যুক্ত করা হলো) */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Featured Companions</h2>
         <p className="text-slate-500 dark:text-slate-400 mb-10">Meet some lovable friends searching for a warm family.</p>
         
         {user ? (
-          // 🔓 ইউজার লগইন থাকলে আসল কার্ডগুলো দেখাবে
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredPets.map((pet) => (
               <PetCard key={pet._id} pet={pet} />
