@@ -1,52 +1,104 @@
 "use client";
+
 import { useState } from "react";
-import axiosSecure from "@/lib/axiosSecure"; 
+import axios from "axios";
 import toast from "react-hot-toast";
 
-const AddPet = () => {
-  const handleAddPet = async (e) => {
+export default function AddPet() {
+  const [form, setForm] = useState({});
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
-        const newPet = {
-      name: form.name.value,
-      species: form.species.value,
-      breed: form.breed.value,
-      age: parseInt(form.age.value),
-      location: form.location.value,
-      description: form.description.value,
-      image: form.image.value,
-    };
 
     try {
-      const res = await axiosSecure.post("/pets", newPet);
+      const token = localStorage.getItem("token");
+
+const newPet = {
+  petName: form.name.value,
+  species: form.species.value,
+  breed: form.breed.value,
+  age: form.age.value,
+  gender: form.gender?.value,
+  image: form.image.value,
+  location: form.location.value,
+  description: form.description.value,
+  status: "available",
+  ownerEmail: user?.email,
+};
+      const res = await axios.post(
+        "http://localhost:5000/pets",
+        newPet,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       if (res.data.success) {
-        toast.success("Pet added successfully!");
-        form.reset();
+        toast.success("Pet added successfully");
+        setForm({});
       }
     } catch (err) {
-      toast.error("Failed to add pet!");
-      console.error(err);
+      toast.error("Failed to add pet");
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Add a Pet</h2>
-      <form onSubmit={handleAddPet} className="space-y-4">
-        <input type="text" name="name" placeholder="Pet Name" className="w-full border p-2" required />
-        <input type="text" name="species" placeholder="Species (Dog/Cat)" className="w-full border p-2" required />
-        <input type="text" name="breed" placeholder="Breed" className="w-full border p-2" />
-        <input type="number" name="age" placeholder="Age" className="w-full border p-2" />
-        <input type="text" name="location" placeholder="Location" className="w-full border p-2" />
-        <textarea name="description" placeholder="Description" className="w-full border p-2" />
-        <input type="text" name="image" placeholder="Image URL" className="w-full border p-2" />
-        
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+    <div className="max-w-xl mx-auto p-6">
+      <form onSubmit={handleSubmit} className="space-y-3">
+
+        <input
+          placeholder="Pet Name"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+
+        <input
+          placeholder="Species"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, species: e.target.value })}
+        />
+
+        <input
+          placeholder="Breed"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, breed: e.target.value })}
+        />
+
+        <input
+          placeholder="Age"
+          type="number"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, age: e.target.value })}
+        />
+
+        <input
+          placeholder="Location"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+        />
+
+        <textarea
+          placeholder="Description"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+        />
+
+        <input
+          placeholder="Image URL"
+          className="border p-2 w-full"
+          onChange={(e) => setForm({ ...form, image: e.target.value })}
+        />
+
+        <button className="bg-blue-500 text-white px-4 py-2 w-full">
           Add Pet
         </button>
       </form>
     </div>
   );
-};
+}
 
-export default AddPet;
+
+
+// jwt secret tokoen ki babe pabo backend theke?
+
+// JWT secret token typically should not be exposed to the frontend. It is used on the backend to sign and verify JWTs. The frontend should only receive the JWT itself after a successful login or registration, which it can then store (e.g., in localStorage) and include in subsequent requests to authenticate the user.

@@ -1,58 +1,69 @@
-'use client';
-import { useState, useEffect } from 'react';
-import api from '../../../utils/api';
+"use client";
 
-export default function MyRequestsPage() {
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+export default function MyRequests() {
   const [requests, setRequests] = useState([]);
 
-  const loadRequests = async () => {
-    const res = await api.get('/requests/my-requests');
-    if (res.data.success) setRequests(res.data.data);
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const fetchRequests = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        "http://localhost:5000/my-requests",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setRequests(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  useEffect(() => { loadRequests(); }, []);
+  const cancelRequest = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
 
-  const handleCancel = async (id) => {
-    if (!confirm('Retract this adoption request document?')) return;
-    await api.delete(`/requests/${id}`);
-    loadRequests();
+      await axios.delete(
+        `http://localhost:5000/adoptions/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      toast.success("Request cancelled");
+      fetchRequests();
+    } catch (err) {
+      toast.error("Failed");
+    }
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-extrabold">Your Adoption Claims</h1>
-      {requests.length === 0 ? (
-        <p className="text-slate-400 py-10 text-center">No active claims initiated by your current credentials context.</p>
-      ) : (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xs border dark:border-slate-700 overflow-hidden">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-400 uppercase tracking-wider border-b dark:border-slate-700">
-                <th className="p-4">Pet Target Name</th>
-                <th className="p-4">Pickup Target</th>
-                <th className="p-4">Process State</th>
-                <th className="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-              {requests.map((req) => (
-                <tr key={req._id}>
-                  <td className="p-4 font-bold">{req.petName}</td>
-                  <td className="p-4 text-sm text-slate-500">{new Date(req.pickupDate).toLocaleDateString()}</td>
-                  <td className="p-4">
-                    <span className={`text-xs px-2.5 py-1 rounded-full font-bold uppercase ${req.status === 'approved' ? 'bg-green-100 text-green-800' : req.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'}`}>
-                      {req.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right">
-                    <button disabled={req.status !== 'pending'} onClick={() => handleCancel(req._id)} className="bg-red-500 disabled:opacity-30 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition hover:bg-red-600">Cancel Request</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="p-6">
+      <h1 className="text-xl font-bold mb-4">My Requests</h1>
+
+      {requests.map((req) => (
+        <div key={req._id} className="border p-3 mb-3 rounded">
+          <h2 className="font-bold">{req.petName}</h2>
+          <p>Status: {req.status}</p>
+          <p>Pickup: {req.pickupDate}</p>
+
+          <button
+            onClick={() => cancelRequest(req._id)}
+            className="bg-red-500 text-white px-3 py-1 mt-2"
+          >
+            Cancel
+          </button>
         </div>
-      )}
+      ))}
     </div>
   );
 }
