@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import PetCard from '../components/PetCard';
 import { useAuth } from '../context/AuthContext'; 
 
@@ -10,7 +10,7 @@ export default function HomePage() {
   const [featuredPets, setFeaturedPets] = useState([]);
   const { user } = useAuth(); 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/pets').then((res) => {
+    api.get('/pets').then((res) => {
       if (res.data.success) setFeaturedPets(res.data.data.slice(0, 6));
     });
   }, []);

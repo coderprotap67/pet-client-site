@@ -17,10 +17,9 @@ export default function Footer() {
           <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
             Connect With Me
           </h4>
-          <div className="flex items-center space-x-6 text-2xl">
-            {/* Facebook */}
+          <div className="flex items-center space-x-6 text-2xl">         
             <a 
-              href="https://facebook.com/your-username" 
+              href="https://www.facebook.com/protap.chakma.54" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-slate-500 dark:text-slate-400 hover:text-[#1877F2] dark:hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1"
@@ -29,9 +28,8 @@ export default function Footer() {
               <FaFacebook size={26} />
             </a>
 
-            {/* Instagram */}
             <a 
-              href="https://instagram.com/your-username" 
+              href="https://instagram.com/protap_chakma" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-slate-500 dark:text-slate-400 hover:text-[#E4405F] dark:hover:text-[#E4405F] transition-all duration-300 hover:-translate-y-1"
@@ -40,9 +38,8 @@ export default function Footer() {
               <FaInstagram size={26} />
             </a>
 
-            {/* LinkedIn */}
             <a 
-              href="https://linkedin.com/in/your-username" 
+              href="https://www.linkedin.com/in/protap-chakma-53185630a/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-slate-500 dark:text-slate-400 hover:text-[#0077B5] dark:hover:text-[#0077B5] transition-all duration-300 hover:-translate-y-1"
@@ -51,9 +48,8 @@ export default function Footer() {
               <FaLinkedin size={26} />
             </a>
 
-            {/* GitHub */}
             <a 
-              href="https://github.com/your-username" 
+              href="https://github.com/coderprotap67" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-slate-500 dark:text-slate-400 hover:text-[#24292e] dark:hover:text-white transition-all duration-300 hover:-translate-y-1"
@@ -71,8 +67,7 @@ export default function Footer() {
           <p>chakmaprotap855@gmail.com</p>
           <p>+880 01533098947</p>
           <p className="text-xs text-slate-400 dark:text-slate-500 pt-2">
-            PawsHome Adoption Platform © 2026
-          </p>
+ © 2026 Protap Chakma. All rights reserved.          </p>
         </div>
 
       </div>
