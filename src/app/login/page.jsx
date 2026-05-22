@@ -1,15 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  // গুগল লগইন থেকে আসা টোকেন ধরার লজিক
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      localStorage.setItem('token', token);
+      router.push('/pets');
+    }
+  }, [router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,13 +44,13 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/auth/google`;
   };
 
   return (
     <div className="max-w-md mx-auto my-20 p-8 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-3xl shadow-xs">
-
       <h2 className="text-3xl font-extrabold mb-6 text-center">
         Welcome Back 🐾
       </h2>
@@ -50,7 +62,6 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleLogin} className="space-y-4">
-
         <input
           required
           type="email"
@@ -59,7 +70,6 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-2.5 border rounded-lg bg-transparent"
         />
-
         <input
           required
           type="password"
@@ -68,7 +78,6 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-2.5 border rounded-lg bg-transparent"
         />
-
         <button
           type="submit"
           disabled={loading}
