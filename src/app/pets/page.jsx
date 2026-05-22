@@ -18,7 +18,7 @@ export default function AllPetsPage() {
         const speciesQuery =
           selectedSpecies.length > 0 ? selectedSpecies.join(',') : '';
 
-        const url = `http://localhost:5000/pets?search=${search}&species=${speciesQuery}`;
+        const url = `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/pets?search=${search}&species=${speciesQuery}`;
 
         const res = await axios.get(url);
 

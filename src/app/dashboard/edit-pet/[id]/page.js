@@ -10,7 +10,7 @@ export default function EditPetPage() {
   const [pet, setPet] = useState({ petName: "", price: "", species: "", image: "" });
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/pets/${id}`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/pets/${id}`).then((res) => {
       setPet(res.data.data);
     });
   }, [id]);
@@ -19,7 +19,7 @@ export default function EditPetPage() {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      await axios.patch(`http://localhost:5000/pets/${id}`, pet, {
+      await axios.patch(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/pets/${id}`, pet, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Pet updated successfully!");

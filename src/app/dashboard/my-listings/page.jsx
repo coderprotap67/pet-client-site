@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import api from '../../utils/api';
+
+import api from '../../../utils/api';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 

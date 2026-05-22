@@ -14,7 +14,7 @@ export default function MyRequests() {
   const fetchRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/my-requests", {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/my-requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("My Requests Data:", res.data);
@@ -30,7 +30,7 @@ export default function MyRequests() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/adoptions/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/adoptions/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

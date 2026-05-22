@@ -17,7 +17,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const res = await axios.post('http://localhost:5000/login', {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/login`, {
         email,
         password,
       });
@@ -33,7 +33,7 @@ export default function LoginPage() {
     }
   };
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/auth/google`;
   };
 
   return (

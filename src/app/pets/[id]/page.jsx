@@ -24,7 +24,7 @@ export default function PetDetailsPage() {
       try {
         setLoading(true);
 
-        const res = await axios.get(`http://localhost:5000/pets/${String(id).trim()}`
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/pets/${String(id).trim()}`
         );
 
         console.log("PET RESPONSE:", res.data);
@@ -76,7 +76,7 @@ export default function PetDetailsPage() {
       };
 
       const res = await axios.post(
-        'http://localhost:5000/adoptions',
+        `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/adoptions`,
         payload,
         {
           headers: {
