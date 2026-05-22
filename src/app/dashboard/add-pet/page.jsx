@@ -151,7 +151,3 @@ export default function AddPet() {
     </div>
   );
 }
-
-// jwt secret tokoen ki babe pabo backend theke?
-
-// JWT secret token typically should not be exposed to the frontend. It is used on the backend to sign and verify JWTs. The frontend should only receive the JWT itself after a successful login or registration, which it can then store (e.g., in localStorage) and include in subsequent requests to authenticate the user.

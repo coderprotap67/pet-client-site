@@ -32,8 +32,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
-  // ---------------- GOOGLE LOGIN (FIXED) ----------------
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:5000/auth/google";
   };

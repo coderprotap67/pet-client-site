@@ -20,7 +20,6 @@ export default function RegisterPage() {
 
   const { setUser } = useAuth();
 
-  // ---------------- REGISTER ----------------
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -62,7 +61,6 @@ export default function RegisterPage() {
     }
   };
 
-  // ---------------- GOOGLE LOGIN ----------------
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:5000/auth/google";
   };
