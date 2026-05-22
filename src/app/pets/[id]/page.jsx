@@ -45,8 +45,6 @@ export default function PetDetailsPage() {
 
     fetchPet();
   }, [id]);
-
-  // LOADING STATE
   if (loading) {
     return (
       <div className="text-center py-20 text-xl font-bold">
@@ -54,8 +52,6 @@ export default function PetDetailsPage() {
       </div>
     );
   }
-
-  // NOT FOUND STATE
   if (!pet) {
     return (
       <div className="text-center py-20 text-red-500 font-bold text-xl">
@@ -103,15 +99,12 @@ export default function PetDetailsPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-
-      {/* IMAGE */}
       <img
         src={pet.image}
         alt={pet.petName}
         className="w-full h-96 object-cover rounded-2xl"
       />
 
-      {/* INFO */}
       <h1 className="text-3xl font-bold mt-5">
         {pet.petName}
       </h1>
@@ -127,7 +120,6 @@ export default function PetDetailsPage() {
         <p>Location: {pet.location}</p>
       </div>
 
-      {/* FORM SECTION */}
       <div className="mt-8">
 
         {!user ? (

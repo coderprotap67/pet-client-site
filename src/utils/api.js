@@ -1,28 +1,44 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL || 'http://localhost:5000',
-  timeout: 10000, 
+  baseURL: 'http://localhost:5000',
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, 
+  withCredentials: true,
 });
+
+// REQUEST
 api.interceptors.request.use(
   (config) => {
+    const token =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('token')
+        : null;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
   },
+  (error) => Promise.reject(error)
+);
+
+// RESPONSE ERROR
+api.interceptors.response.use(
+  (response) => response,
+
   (error) => {
+    console.log("ERROR URL:", error.config?.url);
+
+    console.log("ERROR STATUS:", error.response?.status);
+
+    console.log("ERROR DATA:", error.response?.data);
+
     return Promise.reject(error);
   }
 );
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.warn('Unauthorized request intercepted. User session might be expired.');
-    }
-    return Promise.reject(error); 
-  }
-);
+
 export default api;

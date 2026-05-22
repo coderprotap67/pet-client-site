@@ -44,8 +44,6 @@ export default function AllPetsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-4 gap-8">
-
-      {/* FILTER */}
       <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl h-fit border">
         <h3 className="text-xl font-bold mb-4">Filter</h3>
 
@@ -67,8 +65,6 @@ export default function AllPetsPage() {
           </label>
         ))}
       </div>
-
-      {/* PET LIST */}
       <div className="lg:col-span-3">
         {pets.length === 0 ? (
           <p className="text-center">No pets found</p>

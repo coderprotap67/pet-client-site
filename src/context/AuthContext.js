@@ -1,54 +1,50 @@
 'use client';
-import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
 
-const AuthContext = createContext(null);
+import { createContext, useContext, useEffect, useState } from 'react';
+import api from '../utils/api';
 
-const API_URL = 'http://localhost:5000';
+const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
+    const getUser = async () => {
       try {
-        const res = await axios.get(`${API_URL}/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const res = await api.get('/me');
 
         if (res.data.success) {
           setUser(res.data.data);
-        } else {
-          setUser(null);
         }
-      } catch (err) {
-        console.log("Auth check failed:", err?.response?.data || err.message);
-        setUser(null);
-        localStorage.removeItem('token');
+      } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUser();
+    getUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => useContext(AuthContext);
