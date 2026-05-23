@@ -9,7 +9,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// REQUEST
 api.interceptors.request.use(
   (config) => {
     const token =
@@ -26,7 +25,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// RESPONSE ERROR
 api.interceptors.response.use(
   (response) => response,
 

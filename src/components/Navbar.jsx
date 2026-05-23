@@ -42,7 +42,6 @@ export default function Navbar() {
     <nav className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
-        {/* Logo */}
         <Link
           href="/"
           className="flex items-center space-x-2 group"
@@ -95,10 +94,8 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Right Side */}
         <div className="flex items-center space-x-4">
 
-          {/* Theme Button */}
           {mounted && (
             <button
               onClick={() =>
@@ -114,11 +111,9 @@ export default function Navbar() {
             </button>
           )}
 
-          {/* User */}
           {user ? (
             <div className="relative">
 
-              {/* Profile Button */}
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="w-10 h-10 rounded-full border-2 border-amber-500 overflow-hidden"
@@ -134,8 +129,6 @@ export default function Navbar() {
                   className="w-full h-full object-cover"
                 />
               </button>
-
-              {/* Dropdown */}
               <AnimatePresence>
                 {dropdownOpen && (
                   <motion.div
@@ -145,7 +138,6 @@ export default function Navbar() {
                     className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg py-2 z-50"
                   >
 
-                    {/* User Info */}
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
                       <p className="text-sm font-bold text-slate-800 dark:text-white">
                         {user?.name || "User"}
@@ -156,7 +148,6 @@ export default function Navbar() {
                       </p>
                     </div>
 
-                    {/* Dashboard */}
                     <Link
                       href="/dashboard/my-listings"
                       onClick={() => setDropdownOpen(false)}
@@ -165,7 +156,6 @@ export default function Navbar() {
                       Dashboard
                     </Link>
 
-                    {/* Logout */}
                     <button
                       onClick={() => {
                         setDropdownOpen(false);
