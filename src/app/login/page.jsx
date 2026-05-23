@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
-import { useRouter, useSearchParams } from 'next/navigation'; // useSearchParams যোগ করা হয়েছে
+import { useRouter, useSearchParams } from 'next/navigation'; 
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,16 +12,17 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams(); // URL প্যারামিটার ধরার জন্য এটি সবচেয়ে ভালো উপায়
+  const searchParams = useSearchParams(); 
+useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
 
-  // গুগল লগইন থেকে আসা টোকেন ধরার লজিক
-  useEffect(() => {
-    const token = searchParams.get("token");
     if (token) {
       localStorage.setItem('token', token);
+      console.log("Token saved to localStorage:", token);
       router.push('/pets');
     }
-  }, [searchParams, router]);
+  }, [router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ export default function LoginPage() {
 
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
-        router.push('/pets'); // window.location.href এর বদলে router.push ব্যবহার করা ভালো
+        router.push('/pets'); 
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed.');
@@ -46,7 +47,6 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    // এখানে সরাসরি লিঙ্ক ওপেন করুন
     window.location.assign(`${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/auth/google`);
   };
 
